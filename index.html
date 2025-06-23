@@ -932,6 +932,35 @@
             // Focus on PIN input
             document.getElementById('pinInput').focus();
         });
+
+        // Auto-refresh functionality
+let inactivityTimer;
+let lastActivity = Date.now();
+const INACTIVITY_TIMEOUT = 30000; // 30 seconds
+
+function resetInactivityTimer() {
+    lastActivity = Date.now();
+    clearTimeout(inactivityTimer);
+    
+    inactivityTimer = setTimeout(() => {
+        if (isAuthenticated) {
+            location.reload();
+        }
+    }, INACTIVITY_TIMEOUT);
+}
+
+// Track mouse movement and key presses
+document.addEventListener('mousemove', resetInactivityTimer);
+document.addEventListener('keypress', resetInactivityTimer);
+document.addEventListener('click', resetInactivityTimer);
+document.addEventListener('scroll', resetInactivityTimer);
+
+// Start the timer when authenticated
+function initializeApp() {
+    loadFromStorage();
+    renderNotes();
+    resetInactivityTimer(); // Start tracking inactivity
+}
     </script>
 </body>
 </html>
