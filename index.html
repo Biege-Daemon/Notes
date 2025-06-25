@@ -849,7 +849,7 @@
                 </div>
             `;
 
-            notes.forEach(note => {
+            notes.slice().sort((a, b) => new Date(b.lastEditedAt) - new Date(a.lastEditedAt)).forEach(note => {
                 const noteCard = document.createElement('div');
                 noteCard.className = 'note-card';
                 noteCard.setAttribute('data-id', note.id);
